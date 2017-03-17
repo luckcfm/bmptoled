@@ -18,9 +18,9 @@
 
 int main(int argc, char* argv[])
 {
-    if (argc != 3) //ensure that the user set the right params
+    if (argc != 2) //ensure that the user set the right params
     {
-        printf("Usage: ./bmptoled infile img_size_px\n");
+        printf("Usage: ./bmptoled infile\n");
         return 1;
     }
 
