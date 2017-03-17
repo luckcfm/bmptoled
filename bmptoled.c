@@ -18,8 +18,6 @@
 
 int main(int argc, char* argv[])
 {
-    int size = atoi(argv[3]);
-    char matrix[size][size];   //here is a matrix to store where our leds state
     if (argc != 3) //ensure that the user set the right params
     {
         printf("Usage: ./bmptoled infile img_size_px\n");
@@ -46,7 +44,7 @@ int main(int argc, char* argv[])
     BITMAPINFOHEADER bi;
     fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
     printf("Compression:%d\n\n\n\n\n", bi.biSize);
-
+    char matrix[bi.biWidth][bi.biHeight];
     // determine padding for scanlines
     int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
@@ -73,18 +71,13 @@ int main(int argc, char* argv[])
         // skip over padding, if any
         fseek(inptr, padding, SEEK_CUR);
 
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
-        {
-            fputc(0x00, outptr);
-        }
     }
 
     int biHeight = abs(bi.biHeight);
     //Here we print the generated image.
-    for (int i = biHeight; i > 0; i--)
+    for (int i = bi.biWidth; i > 0; i--)
     {
-	    for (int j = bi.biWidth; j > 0; j--)
+	    for (int j = bi.biHeight; j > 0; j--)
 	    {
 		printf("%c ",matrix[i][j]);
 
